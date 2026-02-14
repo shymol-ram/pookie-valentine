@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Response</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffb6d9 0%, #ffc0d9 50%, #ffe4f0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.3);
+            max-width: 600px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.1);
+            animation: bounce 0.8s ease-in-out;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .response-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .yes-btn:active {
+            transform: scale(0.95);
+        }
+
+        .no-btn {
+            background: #f0f0f0;
+            color: #ff1493;
+            border: 2px solid #ff1493;
+            box-shadow: 0 10px 30px rgba(200, 200, 200, 0.4);
+        }
+
+        .no-btn:hover {
+            transform: scale(1.05);
+            background: #ffb6d9;
+            color: white;
+        }
+
+        .no-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hearts {
+            font-size: 2em;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pauline, will you be my Valentine?</h1>
+        <div class="hearts">💕 💖 💗</div>
+        
+        <div class="button-container">
+            <button class="response-btn yes-btn" onclick="handleYes()">Yes</button>
+            <button class="response-btn no-btn" onclick="handleNo()">No</button>
+        </div>
+    </div>
+
+    <script>
+        function handleYes() {
+            createConfetti();
+            setTimeout(() => {
+                alert('Good because I don\'t want anyone else');
+            }, 500);
+        }
+
+        function handleNo() {
+            // Move the button away when hovering
+            const noBtn = document.querySelector('.no-btn');
+            noBtn.style.position = 'absolute';
+            const randomX = Math.random() * (window.innerWidth - 100);
+            const randomY = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function createConfetti() {
+            const confettiPieces = ['❤️', '💖', '💕', '💗'];
+            
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = confettiPieces[Math.floor(Math.random() * confettiPieces.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                document.body.appendChild(confetti);
+
+                let top = 0;
+                const fall = setInterval(() => {
+                    top += Math.random() * 5 + 2;
+                    confetti.style.top = top + 'px';
+                    
+                    if (top > window.innerHeight) {
+                        clearInterval(fall);
+                        confetti.remove();
+                    }
+                }, 30);
+            }
+        }
+    </script>
+</body>
+</html>
